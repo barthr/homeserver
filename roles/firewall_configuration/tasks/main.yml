@@ -1,0 +1,24 @@
+- name: Install UFW
+  apt:
+    name: ufw
+    state: present
+
+- name: Allow SSH from specific IP range
+  ufw:
+    rule: allow
+    src: 192.168.0.0/24
+    to: any
+    app: OpenSSH
+
+- name: Allow Samba access from specific IP range
+  ufw:
+    rule: allow
+    src: 192.168.0.0/24
+    to: any
+    app: Samba
+  become: yes
+
+- name: Enable firewall
+  ufw:
+    state: enabled
+

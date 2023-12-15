@@ -1,0 +1,10 @@
+[global]
+workgroup = WORKGROUP
+security = user
+encrypt passwords = yes
+
+[nas]
+path = /mnt/nas/bart
+valid users = {{ samba_user }}
+browsable = yes
+writable = yes
