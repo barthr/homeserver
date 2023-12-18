@@ -24,3 +24,20 @@
     name: docker-ce
     state: present
 
+- name: Create Docker group if it does not exist
+  group:
+    name: docker
+    state: present
+
+- name: Add user to Docker group
+  user:
+    name: bart
+    group: docker
+    append: yes
+
+- name: Create a docker network
+  community.docker.docker_network:
+    name: proxy
+    driver: bridge
+    state: present
+  become: yes

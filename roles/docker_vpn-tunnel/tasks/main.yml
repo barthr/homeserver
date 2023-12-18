@@ -1,0 +1,32 @@
+- name: Create WireGuard configuration directory
+  file:
+    path: '{{ services_directory }}/vpn-tunnel/wireguard-config'
+    state: directory
+    mode: '0755'
+  become: yes
+
+- name: Copy WireGuard configuration files
+  copy:
+    src: wireguard-config/
+    dest: '{{ services_directory }}/vpn-tunnel/wireguard-config/'
+    mode: '0644'
+  become: yes
+
+- name: Deploy WireGuard container
+  community.docker.docker_container:
+    name: vpn-tunnel
+    image: lscr.io/linuxserver/wireguard
+    state: started
+    restart_policy: unless-stopped
+    capabilities:
+      - NET_ADMIN
+      - SYS_MODULE
+    env:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: "Europe/Amsterdam"
+    volumes:
+      - "{{ services_directory }}/vpn-tunnel/wireguard-config:/config"
+    sysctls:
+      net.ipv4.conf.all.src_valid_mark: "1"
+  become: yes

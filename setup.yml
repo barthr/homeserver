@@ -4,6 +4,7 @@
     - vars.yml
   roles:
     - mount_nas_drives
-    - docker_installation
     - samba_share
     - firewall_configuration
+    - docker_installation
+    - docker_vpn-tunnel
