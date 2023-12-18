@@ -1,0 +1,78 @@
+- name: Create Media station configuration directory
+  file:
+    path: '{{ media_station_config_dir }}'
+    state: directory
+    mode: '0770'
+  become: yes
+
+- name: Copy WireGuard configuration files
+  copy:
+    src: wireguard-config/
+    owner: media-station
+    group: media-station
+    dest: '{{ media_station_config_dir }}/wireguard-config'
+    mode: '0644'
+  become: yes
+
+- name: Create media-station user
+  user:
+    name: media-station
+    shell: /bin/false  # or /sbin/nologin
+    uid: '{{ media_station_uid }}'
+    create_home: yes
+    home: '{{ media_station_config_dir }}'
+
+- name: Create media station directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: media-station
+    group: media-station
+    mode: '0770'
+  loop:
+    - '{{ media_station_config_dir }}'
+    - '{{ media_station_data_dir }}'
+
+- name: Create correct usenet directory structure
+  file:
+      path: "{{ item }}"
+      state: directory
+      owner: media-station
+      group: media-station
+      mode: '0770'
+  loop:
+    - '{{ media_station_data_dir }}/usenet/movies'
+    - '{{ media_station_data_dir }}/usenet/series'
+    - '{{ media_station_data_dir }}/usenet/downloads'
+    - '{{ media_station_data_dir }}/usenet/incompleted-downloads'
+    - '{{ media_station_data_dir }}/media/movies'
+    - '{{ media_station_data_dir }}/media/series'
+    - '{{ media_station_config_dir }}/sabnzbd/config'
+    - '{{ media_station_config_dir }}/sonarr/config'
+    - '{{ media_station_config_dir }}/radarr/config'
+    - '{{ media_station_config_dir }}/jellyfin/config'
+    - '{{ media_station_config_dir }}/jellyfin/cache'
+
+- name: Add default user to group media-station
+  user:
+    name: bart
+    groups: media-station
+    append: yes
+
+- name: docker-compose.yml is present
+  template:
+    src: docker-compose.yml.j2
+    dest: '{{ media_station_config_dir }}/docker-compose.yml'
+
+- name: Media station Docker compose Service is up
+  community.docker.docker_compose:
+    project_src: '{{ media_station_config_dir }}'
+    pull: yes
+    remove_orphans: yes
+
+- name: Deploy services using Docker Compose
+  community.docker.docker_compose:
+    project_src: '{{ media_station_config_dir }}'
+    state: present
+
+

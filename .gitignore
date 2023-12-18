@@ -1,5 +1,5 @@
 vault_password_file
 vars.yml
-roles/docker_vpn-tunnel/files/wireguard-config/*
-!roles/docker_vpn-tunnel/files/wireguard-config/.keep
+roles/docker_media-station/files/wireguard-config/*
+!roles/docker_media-station/files/wireguard-config/.keep
 

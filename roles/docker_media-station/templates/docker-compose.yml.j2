@@ -1,0 +1,122 @@
+version: "3"
+
+services:
+    wireguard:
+      image: lscr.io/linuxserver/wireguard
+      container_name: wireguard
+      cap_add:
+        - NET_ADMIN
+        - SYS_MODULE
+      environment:
+        PUID: "1000"
+        PGID: "1000"
+        TZ: "Europe/Amsterdam"
+      ports:
+        - "7879:7878"
+        - "8080:8080"
+        - "8989:8989"
+      volumes:
+        - "{{ media_station_config_dir }}/wireguard-config:/config"
+      sysctls:
+        - net.ipv4.conf.all.src_valid_mark=1
+      restart: unless-stopped
+    jellyfin:
+      container_name: jellyfin
+      image: linuxserver/jellyfin
+      devices:
+        - /dev/dri:/dev/dri
+      environment:
+        - PUID={{ media_station_uid }}
+        - PGID={{ media_station_gid }}
+      volumes:
+        - jellyfin-config:/config
+        - jellyfin-cache:/cache
+        - series-dir:/data/tvseries
+        - movies-dir:/data/movies
+      restart: unless-stopped
+      ports:
+        - 8096:8096
+        - 1900:1900
+        - 7359:7359
+    sabnzbd:
+      image: lscr.io/linuxserver/sabnzbd:latest
+      container_name: sabnzbd
+      network_mode: service:wireguard
+      environment:
+        - PUID={{ media_station_uid }}
+        - PGID={{ media_station_gid }}
+        - TZ=Europe/Amsterdam
+      volumes:
+        - sabnzbd-config:/config
+        - '{{ media_station_data_dir }}/usenet/downloads:/downloads'
+        - '{{ media_station_data_dir }}/usenet/incompleted-downloads:/incompleted-downloads'
+      restart: unless-stopped
+    radarr:
+      image: lscr.io/linuxserver/radarr:latest
+      container_name: radarr
+      network_mode: service:wireguard
+      environment:
+        - PUID={{ media_station_uid }}
+        - PGID={{ media_station_gid }}
+        - TZ=Europe/Amsterdam
+      volumes:
+        - radarr-config:/config
+        - '{{ media_station_data_dir }}:/data'
+      restart: unless-stopped
+    sonarr:
+      image: lscr.io/linuxserver/sonarr:latest
+      container_name: sonarr 
+      network_mode: service:wireguard
+      environment:
+        - PUID={{ media_station_uid }}
+        - PGID={{ media_station_gid }}
+        - TZ=Europe/Amsterdam
+      volumes:
+        - sonarr-config:/config
+        - '{{ media_station_data_dir }}:/data'
+      restart: unless-stopped
+
+volumes:
+    sonarr-config:
+      driver: local
+      driver_opts:
+        type: none
+        o: bind
+        device: '{{ media_station_config_dir }}/sonarr/config'
+    radarr-config:
+      driver: local
+      driver_opts:
+        type: none
+        o: bind
+        device: '{{ media_station_config_dir }}/radarr/config'
+    sabnzbd-config:
+      driver: local
+      driver_opts:
+        type: none
+        o: bind
+        device: '{{ media_station_config_dir }}/sabnzbd/config'
+    jellyfin-config:
+      driver: local
+      driver_opts:
+        type: none
+        o: bind
+        device: '{{ media_station_config_dir }}/jellyfin/config'
+    jellyfin-cache:
+      driver: local
+      driver_opts:
+        type: none
+        o: bind
+        device: '{{ media_station_config_dir }}/jellyfin/cache'
+    movies-dir:
+      driver: local
+      driver_opts:
+        type: none
+        o: bind
+        device: '{{ media_station_data_dir }}/media/movies'
+    series-dir:
+      driver: local
+      driver_opts:
+        type: none
+        o: bind
+        device: '{{ media_station_data_dir }}/media/series'
+

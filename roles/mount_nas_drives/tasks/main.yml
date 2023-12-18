@@ -11,7 +11,7 @@
 
 - name: Mount Btrfs RAID 1 filesystem
   mount:
-    path: /mnt/nas
+    path: '{{ nas_drive }}'
     src: "{{ drives[0] }}"
     fstype: btrfs
     opts: defaults

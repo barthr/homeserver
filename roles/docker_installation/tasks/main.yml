@@ -41,3 +41,7 @@
     driver: bridge
     state: present
   become: yes
+
+- name: Install docker compose
+  apt:
+    name: "docker-compose"

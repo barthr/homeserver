@@ -1,1 +1,2 @@
 services_directory: "/home/bart/services"
+nas_drive: /mnt/nas

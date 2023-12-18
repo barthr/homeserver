@@ -1,0 +1,6 @@
+vpn_user: "bart"
+media_station_user: "media-station"
+media_station_config_dir: "/home/{{ media_station_user }}"
+media_station_data_dir: '{{ nas_drive }}/media-station'
+media_station_uid: 2003
+media_station_gid: 2003
