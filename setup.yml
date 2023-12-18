@@ -7,5 +7,4 @@
     - samba_share
     - firewall_configuration
     - docker_installation
-    - docker_vpn-tunnel
     - docker_media-station
