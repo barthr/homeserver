@@ -32,7 +32,7 @@
 - name: Add user to Docker group
   user:
     name: bart
-    group: docker
+    groups: docker
     append: yes
 
 - name: Create a docker network
