@@ -48,8 +48,7 @@ services:
         - TZ=Europe/Amsterdam
       volumes:
         - sabnzbd-config:/config
-        - '{{ media_station_data_dir }}/usenet/downloads:/downloads'
-        - '{{ media_station_data_dir }}/usenet/incompleted-downloads:/incompleted-downloads'
+        - '{{ media_station_data_dir }}/usenet:/media-station/usenet'
       restart: unless-stopped
     radarr:
       image: lscr.io/linuxserver/radarr:latest
@@ -61,7 +60,7 @@ services:
         - TZ=Europe/Amsterdam
       volumes:
         - radarr-config:/config
-        - '{{ media_station_data_dir }}:/data'
+        - '{{ media_station_data_dir }}:/media-station'
       restart: unless-stopped
     sonarr:
       image: lscr.io/linuxserver/sonarr:latest
@@ -73,7 +72,7 @@ services:
         - TZ=Europe/Amsterdam
       volumes:
         - sonarr-config:/config
-        - '{{ media_station_data_dir }}:/data'
+        - '{{ media_station_data_dir }}:/media-station'
       restart: unless-stopped
 
 volumes:
