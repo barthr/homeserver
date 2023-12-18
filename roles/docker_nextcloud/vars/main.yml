@@ -1,0 +1,2 @@
+nextcloud_data_dir: '{{ nas_drive }}/nextcloud'
+nextcloud_config_dir: '{{ services_directory }}/nextcloud'
