@@ -1,0 +1,46 @@
+- name: Create pihole directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - '{{ pihole_config_dir }}'
+
+- name: docker-compose.yml is present
+  template:
+    src: docker-compose.yml.j2
+    dest: '{{ pihole_config_dir }}/docker-compose.yml'
+
+- name: Disable DNSStubListener in systemd-resolved
+  lineinfile:
+    path: /etc/systemd/resolved.conf
+    regexp: '^#?DNSStubListener=yes'
+    line: 'DNSStubListener=no'
+    backup: yes
+
+- name: Remove existing /etc/resolv.conf
+  file:
+    path: /etc/resolv.conf
+    state: absent
+
+- name: Create symlink for /etc/resolv.conf to /run/systemd/resolve/resolv.conf
+  file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+
+- name: Restart systemd-resolved service
+  systemd:
+    name: systemd-resolved
+    state: restarted
+
+- name: Pihole Docker compose Service is up
+  community.docker.docker_compose:
+    project_src: '{{ pihole_config_dir }}'
+    pull: yes
+    remove_orphans: yes
+
+- name: Deploy services using Docker Compose
+  community.docker.docker_compose:
+    project_src: '{{ pihole_config_dir }}'
+    state: present
