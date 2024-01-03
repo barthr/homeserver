@@ -5,6 +5,9 @@
   roles:
     - mount_nas_drives
     - samba_share
-    - firewall_configuration
     - docker_installation
     - docker_media-station
+    - docker_nextcloud
+    - docker_pihole
+    - docker_uptime-kuma
+      # - firewall_configuration

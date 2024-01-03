@@ -2,8 +2,19 @@ version: "3"
 services:
   uptime-kuma:
     image: louislam/uptime-kuma:1
+    environment:
+      PGID: 1000
+      PUID: 1000
     volumes:
       - ./data:/app/data
     ports:
       - 3001:3001
     restart: unless-stopped
+    networks:
+      - ddome
+
+networks:
+    ddome: 
+        external: true
+
+

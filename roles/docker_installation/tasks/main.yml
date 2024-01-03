@@ -37,7 +37,7 @@
 
 - name: Create a docker network
   community.docker.docker_network:
-    name: proxy
+    name: ddome
     driver: bridge
     state: present
   become: yes

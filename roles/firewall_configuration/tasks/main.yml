@@ -20,12 +20,6 @@
     app: Samba
   become: yes
 
-- name: Allow Requests from internal docker IP range
-  ufw:
-    rule: allow
-    from_ip: 172.22.0.0/16
-  become: yes
-
 - name: Enable firewall
   ufw:
     state: enabled

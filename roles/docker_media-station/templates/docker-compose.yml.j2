@@ -25,6 +25,8 @@ services:
       image: linuxserver/jellyfin
       devices:
         - /dev/dri:/dev/dri
+      networks:
+        - ddome
       environment:
         - PUID={{ media_station_uid }}
         - PGID={{ media_station_gid }}
@@ -74,6 +76,10 @@ services:
         - sonarr-config:/config
         - '{{ media_station_data_dir }}:/media-station'
       restart: unless-stopped
+
+networks:
+    ddome: 
+        external: true
 
 volumes:
     sonarr-config:
