@@ -1,2 +1,3 @@
 services_directory: "/home/bart/services"
 nas_drive: /mnt/nas
+services_user: bart
