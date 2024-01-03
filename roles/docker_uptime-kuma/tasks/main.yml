@@ -1,0 +1,23 @@
+- name: Create uptime-kuma directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - '{{ uptime_kuma_config_dir }}'
+
+- name: docker-compose.yml is present
+  template:
+    src: docker-compose.yml
+    dest: '{{ uptime_kuma_config_dir }}/docker-compose.yml'
+
+- name: Uptime Kuma Docker compose Service is up
+  community.docker.docker_compose:
+    project_src: '{{ uptime_kuma_config_dir }}'
+    pull: yes
+    remove_orphans: yes
+
+- name: Deploy services using Docker Compose
+  community.docker.docker_compose:
+    project_src: '{{ uptime_kuma_config_dir }}'
+    state: present

@@ -3,6 +3,10 @@
     name: ufw
     state: present
 
+- name: Reset UFW state
+  ufw:
+    state: reset
+
 - name: Allow SSH
   ufw:
     rule: allow
@@ -14,6 +18,12 @@
     src: 192.168.0.0/24
     to: any
     app: Samba
+  become: yes
+
+- name: Allow Requests from internal docker IP range
+  ufw:
+    rule: allow
+    from_ip: 172.22.0.0/16
   become: yes
 
 - name: Enable firewall
