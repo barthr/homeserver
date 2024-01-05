@@ -7,7 +7,6 @@
     - samba_share
     - docker_installation
     - docker_media-station
-    - docker_nextcloud
     - docker_pihole
     - docker_uptime-kuma
       # - firewall_configuration
