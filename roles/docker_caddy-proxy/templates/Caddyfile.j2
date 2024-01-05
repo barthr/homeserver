@@ -21,4 +21,19 @@
     handle @jellyfin {
         reverse_proxy jellyfin:8096
     }
+
+    @sabnzbd host downloader.bfkr.dev
+    handle @sabnzbd {
+        reverse_proxy wireguard:8080
+    }
+
+    @sonarr host sonarr.bfkr.dev
+    handle @sonarr {
+        reverse_proxy wireguard:8989
+    }
+
+    @radarr host radarr.bfkr.dev
+    handle @radarr {
+        reverse_proxy wireguard:7878
+    }
 }
