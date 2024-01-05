@@ -8,7 +8,6 @@ services:
     ports:
       - "{{ ansible_host}}:53:53/tcp"
       - "{{ ansible_host}}:53:53/udp"
-      - "3000:80/tcp"
     environment:
       TZ: 'Europe/Amsterdam'
       WEBPASSWORD: '{{ pihole_web_password }}'
@@ -21,7 +20,6 @@ services:
     restart: unless-stopped
     networks:
         - ddome
-
 networks:
     ddome: 
         external: true

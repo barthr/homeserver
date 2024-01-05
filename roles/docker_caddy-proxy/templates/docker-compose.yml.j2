@@ -1,0 +1,17 @@
+version: "3"
+services:
+  caddy:
+    image: bartfokker/caddy
+    ports:
+      - "80:80"   # HTTP traffic
+      - "443:443" # HTTPS traffic
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - {{ caddy_config_dir }}/data:/data
+      - {{ caddy_config_dir }}/config:/config
+    networks:
+      - ddome
+
+networks:
+    ddome: 
+        external: true

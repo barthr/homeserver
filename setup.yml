@@ -9,4 +9,5 @@
     - docker_media-station
     - docker_pihole
     - docker_uptime-kuma
+    - docker_caddy-proxy
       # - firewall_configuration

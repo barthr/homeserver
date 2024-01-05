@@ -37,9 +37,7 @@ services:
         - movies-dir:/data/movies
       restart: unless-stopped
       ports:
-        - 8096:8096
-        - 1900:1900
-        - 7359:7359
+        - 8096
     sabnzbd:
       image: lscr.io/linuxserver/sabnzbd:latest
       container_name: sabnzbd

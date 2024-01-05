@@ -1,0 +1,24 @@
+{
+    email fokker.b@pm.me
+}
+
+*.bfkr.dev, bkfr.dev {
+    tls {
+        dns cloudflare {{ cloudflare_access_token }}
+    }
+
+    @dns host dns.bfkr.dev
+    handle @dns {
+        reverse_proxy pihole
+    }
+
+    @uptime host uptime.bfkr.dev
+    handle @uptime {
+        reverse_proxy uptime:3001
+    }
+
+    @jellyfin host jellyfin.bfkr.dev
+    handle @jellyfin {
+        reverse_proxy jellyfin:8096
+    }
+}
