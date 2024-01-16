@@ -36,4 +36,9 @@
     handle @radarr {
         reverse_proxy wireguard:7878
     }
+
+    @changedetection host changedetection.bfkr.dev
+    handle @changedetection {
+        reverse_proxy changedetection:5000
+    }
 }
