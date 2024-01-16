@@ -41,4 +41,10 @@
     handle @changedetection {
         reverse_proxy changedetection:5000
     }
+    
+    @actualbudget host actualbudget.bfkr.dev
+    handle @actualbudget {
+        reverse_proxy actualbudget:5006
+    }
+
 }

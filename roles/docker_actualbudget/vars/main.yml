@@ -1,0 +1,1 @@
+actualbudget_config_dir: '{{ services_directory }}/actualbudget'
