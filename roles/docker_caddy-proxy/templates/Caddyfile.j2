@@ -47,4 +47,9 @@
         reverse_proxy actualbudget:5006
     }
 
+    @miniflux host miniflux.bfkr.dev
+    handle @miniflux {
+        reverse_proxy miniflux:8080
+    }
+
 }
