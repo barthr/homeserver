@@ -2,6 +2,7 @@ version: "3"
 services:
   caddy:
     image: bartfokker/caddy
+    restart: unless-stopped
     ports:
       - "80:80"   # HTTP traffic
       - "443:443" # HTTPS traffic
