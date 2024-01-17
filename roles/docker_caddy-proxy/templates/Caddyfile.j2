@@ -52,4 +52,8 @@
         reverse_proxy miniflux:8080
     }
 
+    @linkding host linkding.bfkr.dev
+    handle @linkding {
+        reverse_proxy linkding:9090
+    }
 }
