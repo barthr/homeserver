@@ -9,5 +9,9 @@
     - docker_media-station
     - docker_pihole
     - docker_uptime-kuma
+    - docker_changedetection
+    - docker_actualbudget
+    - docker_miniflux
+    - docker_linkding
     - docker_caddy-proxy
       # - firewall_configuration

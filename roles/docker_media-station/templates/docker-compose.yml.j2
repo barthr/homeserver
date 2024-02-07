@@ -11,10 +11,6 @@ services:
         PUID: "1000"
         PGID: "1000"
         TZ: "Europe/Amsterdam"
-      ports:
-        - "7878"
-        - "8080"
-        - "8989"
       volumes:
         - "{{ media_station_config_dir }}/wireguard-config:/config"
       sysctls:
@@ -36,8 +32,6 @@ services:
         - series-dir:/data/tvseries
         - movies-dir:/data/movies
       restart: unless-stopped
-      ports:
-        - 8096
     sabnzbd:
       image: lscr.io/linuxserver/sabnzbd:latest
       container_name: sabnzbd

@@ -8,8 +8,6 @@ services:
       PUID: 1000
     volumes:
       - ./data:/app/data
-    ports:
-      - 3001
     restart: unless-stopped
     networks:
       - ddome

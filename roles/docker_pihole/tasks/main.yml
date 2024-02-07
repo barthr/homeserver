@@ -41,7 +41,7 @@
 - name: Pihole Docker compose Service is up
   community.docker.docker_compose:
     project_src: '{{ pihole_config_dir }}'
-    pull: no
+    pull: yes
     remove_orphans: yes
 
 - name: Deploy services using Docker Compose
