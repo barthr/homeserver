@@ -3,15 +3,14 @@
   vars_files:
     - vars.yml
   roles:
-    - mount_nas_drives
-    - samba_share
-    - docker_installation
+    # - mount_nas_drives
+    # - samba_share
+    # - docker_installation
     - docker_media-station
-    - docker_pihole
-    - docker_uptime-kuma
-    - docker_changedetection
-    - docker_actualbudget
-    - docker_miniflux
-    - docker_linkding
+    # - docker_pihole
+    # - docker_uptime-kuma
+    # - docker_changedetection
+    # - docker_actualbudget
+    # - docker_miniflux
+    # - docker_linkding
     - docker_caddy-proxy
-      # - firewall_configuration

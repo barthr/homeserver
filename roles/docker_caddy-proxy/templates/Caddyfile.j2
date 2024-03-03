@@ -7,11 +7,6 @@
         dns cloudflare {{ cloudflare_access_token }}
     }
 
-    @dns host dns.bfkr.dev
-    handle @dns {
-        reverse_proxy pihole
-    }
-
     @uptime host uptime.bfkr.dev
     handle @uptime {
         reverse_proxy uptime:3001
@@ -35,6 +30,11 @@
     @radarr host radarr.bfkr.dev
     handle @radarr {
         reverse_proxy wireguard:7878
+    }
+
+    @jellyseerr host netflix.bfkr.dev
+    handle @jellyseerr {
+        reverse_proxy wireguard:5055
     }
 
     @changedetection host changedetection.bfkr.dev

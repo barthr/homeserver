@@ -50,6 +50,7 @@
     - '{{ media_station_config_dir }}/sabnzbd/config'
     - '{{ media_station_config_dir }}/sonarr/config'
     - '{{ media_station_config_dir }}/radarr/config'
+    - '{{ media_station_config_dir }}/jellyseerr/config'
     - '{{ media_station_config_dir }}/jellyfin/config'
     - '{{ media_station_config_dir }}/jellyfin/cache'
 
