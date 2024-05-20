@@ -56,4 +56,9 @@
     handle @linkding {
         reverse_proxy linkding:9090
     }
+    
+    @homeassistant host home.bfkr.dev
+    handle @homeassistant {
+        reverse_proxy homeassistant:8123
+    }
 }
