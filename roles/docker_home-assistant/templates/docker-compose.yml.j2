@@ -6,6 +6,8 @@ services:
     restart: unless-stopped
     volumes:
       - {{ ha_config_dir }}:/config
+    ports:
+      - 5683:5683/udp
     environment:
       - PUID=1000
       - PGID=1000
