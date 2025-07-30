@@ -4,9 +4,6 @@
     - vars.yml
   roles:
     - server_setup
-    - mount_nas_drives
-    - samba_share
-    - docker_installation
     - docker_media-station
     - docker_uptime-kuma
     - docker_changedetection

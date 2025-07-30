@@ -1,4 +1,0 @@
-nas_drive: /mnt/nas
-drives:
-  - /dev/sda
-  - /dev/sdb

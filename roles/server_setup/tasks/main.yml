@@ -21,3 +21,121 @@
     line: 'Unattended-Upgrade::Origins-Pattern { "origin=Ubuntu,archive=${distro_codename}-security"; };'
     state: present
     backrefs: yes
+ 
+- name: Install btrfs utilities
+  apt:
+    name: btrfs-progs
+    state: present
+
+- name: Create mount point
+  file:
+    path: /mnt/nas
+    state: directory
+    mode: '0755'
+    
+- name: Mount Btrfs RAID 1 filesystem
+  mount:
+    path: '{{ nas_drive }}'
+    src: "/dev/sda"
+    fstype: btrfs
+    opts: defaults
+    state: mounted
+    
+- name: Install Samba
+  apt:
+    name: samba
+    state: present
+  become: yes
+
+- name: Create Samba user
+  command: smbpasswd -a {{ samba_user }}
+  become: yes
+  args:
+    creates: "/var/lib/samba/private/passdb.tdb"
+
+- name: Set Samba user password
+  shell: |
+    smbpasswd -s -a {{ samba_user }} <<EOF
+    {{ samba_password }}
+    {{ samba_password }}
+    EOF
+  become: yes
+  args:
+    executable: /bin/bash
+
+- name: Ensure shared directory exists
+  file:
+    path: /mnt/nas/bart
+    state: directory
+    mode: '0755'
+    owner: '{{ samba_user }}'
+    group: '{{ samba_user }}'
+  become: yes
+
+- name: Configure Samba share
+  template:
+    src: smb.conf.j2
+    dest: /etc/samba/smb.conf
+  notify: restart samba
+  become: yes
+
+- name: Install required packages
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+
+- name: Add Docker official GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    state: present
+
+- name: Install Docker
+  apt:
+    name: docker-ce
+    state: present
+
+- name: Create Docker group if it does not exist
+  group:
+    name: docker
+    state: present
+
+- name: Add user to Docker group
+  user:
+    name: bart
+    groups: docker
+    append: yes
+
+- name: Create a docker network
+  community.docker.docker_network:
+    name: ddome
+    driver: bridge
+    ipam_config:
+      - subnet: 172.23.0.0/16
+        gateway: 172.23.0.1
+    state: present
+  become: yes
+
+- name: Get Docker network info
+  community.docker.docker_network_info:
+    name: ddome
+  register: ddome_network_info
+
+- name: Set facts for Docker network
+  set_fact:
+    ddome_subnet: "{{ ddome_network_info.network.IPAM.Config[0].Subnet }}"
+    ddome_gateway: "{{ ddome_network_info.network.IPAM.Config[0].Gateway }}"
+
+- name: Install docker compose
+  apt:
+    name: "docker-compose"
