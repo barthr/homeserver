@@ -9,7 +9,7 @@
       - gnupg-agent
       - software-properties-common
 
-- name: Add Docker’s official GPG key
+- name: Add Docker official GPG key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
@@ -39,8 +39,21 @@
   community.docker.docker_network:
     name: ddome
     driver: bridge
+    ipam_config:
+      - subnet: 172.23.0.0/16
+        gateway: 172.23.0.1
     state: present
   become: yes
+
+- name: Get Docker network info
+  community.docker.docker_network_info:
+    name: ddome
+  register: ddome_network_info
+
+- name: Set facts for Docker network
+  set_fact:
+    ddome_subnet: "{{ ddome_network_info.networks[0].ipam.config[0].subnet }}"
+    ddome_gateway: "{{ ddome_network_info.networks[0].ipam.config[0].gateway }}"
 
 - name: Install docker compose
   apt:
