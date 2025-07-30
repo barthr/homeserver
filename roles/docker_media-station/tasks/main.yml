@@ -54,9 +54,9 @@
     - '{{ media_station_config_dir }}/jellyfin/config'
     - '{{ media_station_config_dir }}/jellyfin/cache'
 
-- name: Add default user to group media-station
+- name: Add default user {{ services_user }} to group media-station
   user:
-    name: bart
+    name: "{{ services_user }}"
     groups: media-station
     append: yes
 

@@ -1,28 +1,9 @@
-- name: Ensure groups exist
-  ansible.builtin.group:
-    name: "{{ item.name }}"
-    gid: "{{ item.gid }}"
-    state: present
-  loop:
-    - { name: 'media-station', gid: 2003 }
-
 - name: Ensure user {{ services_user }} exists with correct UID and groups
   ansible.builtin.user:
     name: '{{ services_user }}'
     uid: 1000
-    groups: media-station
-    append: true
     home: /home/bart
     shell: /bin/bash
-    create_home: true
-
-- name: Ensure user 'media-station' exists
-  ansible.builtin.user:
-    name: media-station
-    uid: 2003
-    group: media-station
-    shell: /bin/false
-    home: /home/media-station
     create_home: true
 
 - name: Ensure unattended-upgrades is installed
