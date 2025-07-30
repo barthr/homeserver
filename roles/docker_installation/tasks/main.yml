@@ -52,8 +52,8 @@
 
 - name: Set facts for Docker network
   set_fact:
-    ddome_subnet: "{{ ddome_network_info.networks[0].ipam.config[0].subnet }}"
-    ddome_gateway: "{{ ddome_network_info.networks[0].ipam.config[0].gateway }}"
+    ddome_subnet: "{{ ddome_network_info.network.IPAM.Config[0].Subnet }}"
+    ddome_gateway: "{{ ddome_network_info.network.IPAM.Config[0].Gateway }}"
 
 - name: Install docker compose
   apt:
