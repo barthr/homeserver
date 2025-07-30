@@ -1,0 +1,23 @@
+- name: Ensure unattended-upgrades is installed
+  apt:
+    name: unattended-upgrades
+    state: present
+    update_cache: yes
+
+- name: Configure automatic security updates
+  copy:
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Ensure security updates are enabled in 50unattended-upgrades
+  lineinfile:
+    path: /etc/apt/apt.conf.d/50unattended-upgrades
+    regexp: '^//?Unattended-Upgrade::Origins-Pattern.+security'
+    line: 'Unattended-Upgrade::Origins-Pattern { "origin=Ubuntu,archive=${distro_codename}-security"; };'
+    state: present
+    backrefs: yes
