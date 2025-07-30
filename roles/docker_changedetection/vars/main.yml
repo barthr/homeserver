@@ -1,1 +1,0 @@
-changedetection_config_dir: '{{ services_directory }}/changedetection'

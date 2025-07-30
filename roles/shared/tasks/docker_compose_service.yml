@@ -1,0 +1,52 @@
+- name: Set default service paths for this role
+  set_fact:
+    service_config_dir: "{{ services_directory }}/{{ service_name }}"
+    service_compose_template: "{{ role_path }}/templates/docker-compose.yml.j2"
+
+- name: Create {{ service_name }} directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    group: "{{ services_user }}"
+    owner: "{{ services_user }}"
+  loop: "{{ [service_config_dir] + (service_extra_directories | default([])) }}"
+    
+- name: Copy additional files for {{ service_name }}
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ service_config_dir }}/{{ item.dest | default(item.src | basename) }}"
+    owner: "{{ services_user }}"
+    group: "{{ services_user }}"
+    mode: "{{ item.mode | default('0644') }}"
+  loop: "{{ service_extra_files | default([]) }}"
+  when: service_extra_files is defined
+
+
+- name: Template extra files for {{ service_name }}
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ service_config_dir }}/{{ item.dest | default(item.src | regex_replace('\\.j2$', '')) }}"
+    owner: "{{ services_user }}"
+    group: "{{ services_user }}"
+    mode: "{{ item.mode | default('0644') }}"
+  loop: "{{ service_extra_templates | default([]) }}" 
+  when: service_extra_templates is defined
+
+- name: Ensure docker-compose.yml for {{ service_name }} is present
+  template:
+    src: "{{ service_compose_template }}"
+    dest: "{{ service_config_dir }}/docker-compose.yml"
+    group: "{{ services_user }}"
+    owner: "{{ services_user }}"
+
+- name: Pull and update Docker Compose services for {{ service_name }}
+  community.docker.docker_compose:
+    project_src: "{{ service_config_dir }}"
+    pull: true
+    remove_orphans: true
+
+- name: Ensure Docker Compose service {{ service_name }} is running
+  community.docker.docker_compose:
+    project_src: "{{ service_config_dir }}"
+    state: present

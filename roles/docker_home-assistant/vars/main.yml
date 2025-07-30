@@ -1,3 +1,0 @@
-ha_service_dir: '{{ services_directory }}/homeassistant'
-ha_config_dir: '{{ ha_service_dir }}/config'
-

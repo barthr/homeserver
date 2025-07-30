@@ -4,7 +4,7 @@
 
 *.bfkr.dev, bkfr.dev {
     tls {
-        dns cloudflare {{ cloudflare_access_token }}
+        dns cloudflare {{ cloudflare_secret }}
     }
 
     @uptime host uptime.bfkr.dev

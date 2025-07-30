@@ -1,11 +1,10 @@
-version: '3'
 services:
   homeassistant:
     container_name: homeassistant
     image: lscr.io/linuxserver/homeassistant:latest
     restart: unless-stopped
     volumes:
-      - {{ ha_config_dir }}:/config
+      - {{ service_config_dir }}:/config
     ports:
       - 5683:5683/udp
     environment:

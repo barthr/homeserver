@@ -13,4 +13,3 @@
     - docker_linkding
     - docker_home-assistant
     - docker_caddy-proxy
-    - docker_restic

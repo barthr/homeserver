@@ -1,35 +1,10 @@
-- name: Create home assistant directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: '0755'
-    group: '{{ services_user }}'    
-    owner: '{{ services_user }}'    
-  loop:
-    - '{{ ha_service_dir }}'
-    - '{{ ha_config_dir }}'
-      
-- name: Copy Homeassistant configuration files
-  copy:
-    src: configuration.yaml
-    group: '{{ services_user }}'    
-    owner: '{{ services_user }}'    
-    dest: '{{ ha_config_dir }}/configuration.yaml'
-
-- name: docker-compose.yml is present
-  template:
-    src: docker-compose.yml.j2
-    dest: '{{ ha_service_dir }}/docker-compose.yml'
-    group: '{{ services_user }}'    
-    owner: '{{ services_user }}'    
-
-- name: Home assistant Docker compose Service is up
-  community.docker.docker_compose:
-    project_src: '{{ ha_service_dir }}'
-    pull: yes
-    remove_orphans: yes
-
-- name: Deploy services using Docker Compose
-  community.docker.docker_compose:
-    project_src: '{{ ha_service_dir }}'
-    state: present
+- name: Deploy Home Assistant
+  ansible.builtin.import_tasks: "{{ playbook_dir }}/roles/shared/tasks/docker_compose_service.yml"
+  vars:
+    service_name: "homeassistant"
+    service_extra_directories:
+      - "{{ service_config_dir }}/config"
+    service_extra_files:
+      - src: "{{ role_path }}/files/configuration.yaml"
+        dest: "config/configuration.yaml"
+        mode: "0644"

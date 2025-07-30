@@ -1,27 +1,7 @@
-- name: Create miniflux directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: '0755'
-    group: '{{ services_user }}'    
-    owner: '{{ services_user }}'    
-  loop:
-    - '{{ miniflux_config_dir }}'
-
-- name: docker-compose.yml is present
-  template:
-    src: docker-compose.yml.j2
-    dest: '{{ miniflux_config_dir }}/docker-compose.yml'
-    group: '{{ services_user }}'    
-    owner: '{{ services_user }}'    
-
-- name: Miniflux Docker compose Service is up
-  community.docker.docker_compose:
-    project_src: '{{ miniflux_config_dir }}'
-    pull: yes
-    remove_orphans: yes
-
-- name: Deploy services using Docker Compose
-  community.docker.docker_compose:
-    project_src: '{{ miniflux_config_dir }}'
-    state: present
+- name: Deploy Miniflux
+  ansible.builtin.import_tasks: "{{ playbook_dir }}/roles/shared/tasks/docker_compose_service.yml"
+  vars:
+    service_name: "miniflux"
+    postgress_password: "{{ miniflux_postgres_password }}"
+    admin_username: "{{ miniflux_admin_username }}"
+    admin_password: "{{ miniflux_admin_password }}"
