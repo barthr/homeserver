@@ -61,4 +61,14 @@
     handle @homeassistant {
         reverse_proxy homeassistant:8123
     }
+    
+    @n8n host n8n.bfkr.dev
+    handle @n8n {
+        reverse_proxy n8n:5678
+    }
+    
+    @silverbullet host silverbullet.bfkr.dev
+    handle @silverbullet {
+        reverse_proxy silverbullet:3000
+    }
 }

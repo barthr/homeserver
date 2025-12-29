@@ -1,0 +1,6 @@
+- name: Deploy Silverbullet
+  ansible.builtin.import_tasks: "{{ playbook_dir }}/roles/shared/tasks/docker_compose_service.yml"
+  vars:
+    service_name: "silverbullet"
+    username: "{{ silverbullet_username }}"
+    password: "{{ silverbullet_password }}"

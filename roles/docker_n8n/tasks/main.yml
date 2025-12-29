@@ -1,0 +1,4 @@
+- name: Deploy n8n
+  ansible.builtin.import_tasks: "{{ playbook_dir }}/roles/shared/tasks/docker_compose_service.yml"
+  vars:
+    service_name: "n8n"

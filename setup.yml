@@ -3,11 +3,13 @@
   vars_files:
     - vars.yml
   roles:
-    - server_setup
-    - docker_media-station
-    - docker_uptime-kuma
-    - docker_changedetection
-    - docker_miniflux
-    - docker_linkding
-    - docker_home-assistant
-    - docker_caddy-proxy
+   - server_setup
+   - docker_media-station
+   - docker_uptime-kuma
+   - docker_changedetection
+   - docker_miniflux
+   - docker_linkding
+   - docker_home-assistant
+   - docker_n8n
+   - docker_silverbullet
+   - docker_caddy-proxy

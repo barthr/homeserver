@@ -97,6 +97,36 @@
       - curl
       - gnupg-agent
       - software-properties-common
+      - dropbear-initramfs
+
+- name: Ensure dropbear initramfs SSH directory exists
+  file:
+    path: /etc/dropbear/initramfs
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Install SSH authorized_keys for initramfs unlock
+  copy:
+    src: authorized_keys
+    dest: /etc/dropbear/initramfs/authorized_keys
+    owner: root
+    group: root
+    mode: "0600"
+
+- name: Configure dropbear options (no password auth)
+  copy:
+    dest: /etc/dropbear/initramfs/dropbear.conf
+    content: |
+      DROPBEAR_OPTIONS="-s -j -k"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Rebuild initramfs
+  command: update-initramfs -u
+  changed_when: true
 
 - name: Add Docker official GPG key
   apt_key:
