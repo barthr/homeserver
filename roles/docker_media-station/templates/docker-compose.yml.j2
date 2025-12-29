@@ -1,7 +1,6 @@
 services:
     wireguard:
       image: lscr.io/linuxserver/wireguard
-      container_name: wireguard
       networks:
         - ddome
       cap_add:
@@ -17,7 +16,6 @@ services:
         - net.ipv4.conf.all.src_valid_mark=1
       restart: unless-stopped
     jellyfin:
-      container_name: jellyfin
       image: linuxserver/jellyfin
       devices:
         - /dev/dri:/dev/dri
@@ -34,7 +32,6 @@ services:
       restart: unless-stopped
     jellyseerr:
       image: fallenbagel/jellyseerr:latest
-      container_name: jellyseerr
       network_mode: service:wireguard
       environment:
         - LOG_LEVEL=info
@@ -45,7 +42,6 @@ services:
       restart: unless-stopped
     sabnzbd:
       image: lscr.io/linuxserver/sabnzbd:latest
-      container_name: sabnzbd
       network_mode: service:wireguard
       environment:
         - PUID={{ media_station_uid }}
@@ -57,7 +53,6 @@ services:
       restart: unless-stopped
     radarr:
       image: lscr.io/linuxserver/radarr:latest
-      container_name: radarr
       network_mode: service:wireguard
       environment:
         - PUID={{ media_station_uid }}
@@ -69,7 +64,6 @@ services:
       restart: unless-stopped
     sonarr:
       image: lscr.io/linuxserver/sonarr:latest
-      container_name: sonarr 
       network_mode: service:wireguard
       environment:
         - PUID={{ media_station_uid }}
