@@ -1,6 +1,6 @@
 services:
   uptime-kuma:
-    image: louislam/uptime-kuma:1
+    image: louislam/uptime-kuma:2
     environment:
       PGID: 1000
       PUID: 1000
@@ -15,8 +15,31 @@ services:
       - "homepage.icon=uptime-kuma.png"
       - "homepage.href=https://uptime.bfkr.dev"
       - "homepage.description=Service monitoring"
+      - "kuma.uptime.http.name=Uptime Kuma"
+      - "kuma.uptime.http.url=https://uptime.bfkr.dev"
+  autokuma:
+    image: ghcr.io/bigboot/autokuma:latest
+    restart: unless-stopped
+    environment:
+      - AUTOKUMA__KUMA__URL=http://uptime-kuma:3001
+      - AUTOKUMA__KUMA__USERNAME={{ kuma_username }}
+      - AUTOKUMA__KUMA__PASSWORD={{ kuma_password }}
+      - AUTOKUMA__DOCKER__SOCKET=/var/run/docker.sock
+      - AUTOKUMA__DOCKER__SOURCE=container
+      - AUTOKUMA__DOCKER__DEFAULT_NAME=service
+      - AUTOKUMA__DOCKER__DEFAULT_SETTINGS=[{"type":"group","value":"AutoKuma"},{"type":"interval","value":"60"}]
+      - AUTOKUMA__DOCKER__CLEANUP=true
+    volumes:
+      - ./autokuma-data:/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - ddome
+    labels:
+      - "homepage.group=Infrastructure"
+      - "homepage.name=AutoKuma"
+      - "homepage.icon=uptime-kuma.png"
+      - "homepage.description=Auto monitor sync"
 
 networks:
     ddome: 
         external: true
-

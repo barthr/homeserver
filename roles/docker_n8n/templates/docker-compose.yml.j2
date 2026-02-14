@@ -27,6 +27,8 @@ services:
       - "homepage.icon=n8n.png"
       - "homepage.href=https://n8n.bfkr.dev"
       - "homepage.description=Workflow automation"
+      - "kuma.n8n.http.name=n8n"
+      - "kuma.n8n.http.url=https://n8n.bfkr.dev"
 
 volumes:
   n8n_data:
@@ -34,4 +36,3 @@ volumes:
 networks:
     ddome: 
         external: true
-

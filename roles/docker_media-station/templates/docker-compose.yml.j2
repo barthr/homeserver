@@ -36,6 +36,8 @@ services:
         - "homepage.icon=jellyfin.png"
         - "homepage.href=https://jellyfin.bfkr.dev"
         - "homepage.description=Media server"
+        - "kuma.jellyfin.http.name=Jellyfin"
+        - "kuma.jellyfin.http.url=https://jellyfin.bfkr.dev"
     jellyseerr:
       image: fallenbagel/jellyseerr:latest
       network_mode: service:wireguard
@@ -52,6 +54,8 @@ services:
         - "homepage.icon=jellyseerr.png"
         - "homepage.href=https://netflix.bfkr.dev"
         - "homepage.description=Media requests"
+        - "kuma.jellyseerr.http.name=Jellyseerr"
+        - "kuma.jellyseerr.http.url=https://netflix.bfkr.dev"
     sabnzbd:
       image: lscr.io/linuxserver/sabnzbd:latest
       network_mode: service:wireguard
@@ -69,6 +73,8 @@ services:
         - "homepage.icon=sabnzbd.png"
         - "homepage.href=https://downloader.bfkr.dev"
         - "homepage.description=Usenet downloader"
+        - "kuma.sabnzbd.http.name=SABnzbd"
+        - "kuma.sabnzbd.http.url=https://downloader.bfkr.dev"
     radarr:
       image: lscr.io/linuxserver/radarr:latest
       network_mode: service:wireguard
@@ -86,6 +92,8 @@ services:
         - "homepage.icon=radarr.png"
         - "homepage.href=https://radarr.bfkr.dev"
         - "homepage.description=Movie library automation"
+        - "kuma.radarr.http.name=Radarr"
+        - "kuma.radarr.http.url=https://radarr.bfkr.dev"
     sonarr:
       image: lscr.io/linuxserver/sonarr:latest
       network_mode: service:wireguard
@@ -103,6 +111,8 @@ services:
         - "homepage.icon=sonarr.png"
         - "homepage.href=https://sonarr.bfkr.dev"
         - "homepage.description=Series library automation"
+        - "kuma.sonarr.http.name=Sonarr"
+        - "kuma.sonarr.http.url=https://sonarr.bfkr.dev"
 
 networks:
     ddome: 

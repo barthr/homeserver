@@ -21,6 +21,8 @@ services:
       - "homepage.icon=miniflux.png"
       - "homepage.href=https://miniflux.bfkr.dev"
       - "homepage.description=RSS reader"
+      - "kuma.miniflux.http.name=Miniflux"
+      - "kuma.miniflux.http.url=https://miniflux.bfkr.dev"
   db:
     image: postgres:15
     environment:
@@ -40,4 +42,3 @@ networks:
     miniflux:
     ddome: 
         external: true
-

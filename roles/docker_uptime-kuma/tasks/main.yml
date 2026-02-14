@@ -2,3 +2,6 @@
   ansible.builtin.import_tasks: "{{ playbook_dir }}/roles/shared/tasks/docker_compose_service.yml"
   vars:
     service_name: "uptime-kuma"
+    service_extra_directories:
+      - "{{ service_config_dir }}/data"
+      - "{{ service_config_dir }}/autokuma-data"
