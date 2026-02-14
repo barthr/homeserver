@@ -10,9 +10,14 @@ services:
       - ddome
     ports:
       - 3000
+    labels:
+      - "homepage.group=Productivity"
+      - "homepage.name=Silverbullet"
+      - "homepage.icon=silverbullet.png"
+      - "homepage.href=https://silverbullet.bfkr.dev"
+      - "homepage.description=Personal knowledge base"
 
 networks:
     ddome: 
       external: true
-
 

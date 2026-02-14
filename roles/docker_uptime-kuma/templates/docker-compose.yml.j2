@@ -9,9 +9,14 @@ services:
     restart: unless-stopped
     networks:
       - ddome
+    labels:
+      - "homepage.group=Infrastructure"
+      - "homepage.name=Uptime Kuma"
+      - "homepage.icon=uptime-kuma.png"
+      - "homepage.href=https://uptime.bfkr.dev"
+      - "homepage.description=Service monitoring"
 
 networks:
     ddome: 
         external: true
-
 

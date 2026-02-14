@@ -1,0 +1,22 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /:/host:ro
+    environment:
+      - HOMEPAGE_ALLOWED_HOSTS=home.bfkr.dev
+    networks:
+      - ddome
+    labels:
+      - "homepage.group=Infrastructure"
+      - "homepage.name=Homepage"
+      - "homepage.icon=homepage.png"
+      - "homepage.href=https://home.bfkr.dev"
+      - "homepage.description=Service dashboard"
+
+networks:
+  ddome:
+    external: true

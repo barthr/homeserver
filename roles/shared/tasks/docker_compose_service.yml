@@ -40,13 +40,15 @@
     group: "{{ services_user }}"
     owner: "{{ services_user }}"
 
-- name: Pull and update Docker Compose services for {{ service_name }}
+- name: Stop existing containers for {{ service_name }}
+  community.docker.docker_compose:
+    project_src: "{{ service_config_dir }}"
+    state: absent
+
+- name: Pull and recreate Docker Compose services for {{ service_name }}
   community.docker.docker_compose:
     project_src: "{{ service_config_dir }}"
     pull: true
     remove_orphans: true
-
-- name: Ensure Docker Compose service {{ service_name }} is running
-  community.docker.docker_compose:
-    project_src: "{{ service_config_dir }}"
+    recreate: always
     state: present

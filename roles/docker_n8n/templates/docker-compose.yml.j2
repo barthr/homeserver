@@ -21,6 +21,12 @@ services:
     volumes:
       - n8n_data:/home/node/.n8n
       - ./local-files:/files
+    labels:
+      - "homepage.group=Automation"
+      - "homepage.name=n8n"
+      - "homepage.icon=n8n.png"
+      - "homepage.href=https://n8n.bfkr.dev"
+      - "homepage.description=Workflow automation"
 
 volumes:
   n8n_data:
@@ -28,5 +34,4 @@ volumes:
 networks:
     ddome: 
         external: true
-
 

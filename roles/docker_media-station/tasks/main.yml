@@ -65,15 +65,16 @@
     src: docker-compose.yml.j2
     dest: '{{ media_station_config_dir }}/docker-compose.yml'
 
-- name: Media station Docker compose Service is up
+- name: Stop existing media-station containers
   community.docker.docker_compose:
     project_src: '{{ media_station_config_dir }}'
-    pull: yes
-    remove_orphans: yes
+    state: absent
 
-- name: Deploy services using Docker Compose
+- name: Pull and recreate media-station containers
   community.docker.docker_compose:
     project_src: '{{ media_station_config_dir }}'
+    pull: true
+    remove_orphans: true
+    recreate: always
     state: present
-
 

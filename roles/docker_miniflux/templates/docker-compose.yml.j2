@@ -15,6 +15,12 @@ services:
       - ADMIN_USERNAME={{ admin_username }}
       - ADMIN_PASSWORD={{ admin_password }}      
       - DEBUG=0
+    labels:
+      - "homepage.group=Productivity"
+      - "homepage.name=Miniflux"
+      - "homepage.icon=miniflux.png"
+      - "homepage.href=https://miniflux.bfkr.dev"
+      - "homepage.description=RSS reader"
   db:
     image: postgres:15
     environment:
@@ -34,5 +40,4 @@ networks:
     miniflux:
     ddome: 
         external: true
-
 

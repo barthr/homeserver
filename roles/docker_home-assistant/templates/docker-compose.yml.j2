@@ -11,9 +11,14 @@ services:
       - PGID=1000
     networks:
       - ddome
+    labels:
+      - "homepage.group=Automation"
+      - "homepage.name=Home Assistant"
+      - "homepage.icon=home-assistant.png"
+      - "homepage.href=https://homeassistant.bfkr.dev"
+      - "homepage.description=Home automation hub"
 
 networks:
     ddome: 
         external: true
-
 

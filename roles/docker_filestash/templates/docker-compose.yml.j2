@@ -1,0 +1,37 @@
+services:
+  filestash:
+    image: machines/filestash:latest
+    restart: unless-stopped
+    environment:
+      - APPLICATION_URL=drive.bfkr.dev
+      - CANARY=true
+      - OFFICE_URL=https://office.bfkr.dev
+      - OFFICE_FILESTASH_URL=https://drive.bfkr.dev
+      - OFFICE_REWRITE_URL=https://office.bfkr.dev
+    expose:
+      - "8334"
+    networks:
+      - ddome
+    volumes:
+      - ./data:/app/data/state/
+    labels:
+      - "homepage.group=Productivity"
+      - "homepage.name=Filestash"
+      - "homepage.icon=filestash.png"
+      - "homepage.href=https://drive.bfkr.dev"
+      - "homepage.description=Drive web interface"
+
+  wopi_server:
+    image: collabora/code:24.04.10.2.1
+    restart: unless-stopped
+    networks:
+      - ddome
+    environment:
+      - "extra_params=--o:ssl.enable=false --o:ssl.termination=true"
+      - aliasgroup1=https://drive\.bfkr\.dev
+    expose:
+    - "9980"
+
+networks:
+  ddome:
+    external: true

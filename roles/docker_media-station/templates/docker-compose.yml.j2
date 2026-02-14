@@ -30,6 +30,12 @@ services:
         - series-dir:/data/tvseries
         - movies-dir:/data/movies
       restart: unless-stopped
+      labels:
+        - "homepage.group=Media"
+        - "homepage.name=Jellyfin"
+        - "homepage.icon=jellyfin.png"
+        - "homepage.href=https://jellyfin.bfkr.dev"
+        - "homepage.description=Media server"
     jellyseerr:
       image: fallenbagel/jellyseerr:latest
       network_mode: service:wireguard
@@ -40,6 +46,12 @@ services:
       volumes:
         - jellyseerr-config:/app/config
       restart: unless-stopped
+      labels:
+        - "homepage.group=Media"
+        - "homepage.name=Jellyseerr"
+        - "homepage.icon=jellyseerr.png"
+        - "homepage.href=https://netflix.bfkr.dev"
+        - "homepage.description=Media requests"
     sabnzbd:
       image: lscr.io/linuxserver/sabnzbd:latest
       network_mode: service:wireguard
@@ -51,6 +63,12 @@ services:
         - sabnzbd-config:/config
         - '{{ media_station_data_dir }}/usenet:/media-station/usenet'
       restart: unless-stopped
+      labels:
+        - "homepage.group=Media"
+        - "homepage.name=SABnzbd"
+        - "homepage.icon=sabnzbd.png"
+        - "homepage.href=https://downloader.bfkr.dev"
+        - "homepage.description=Usenet downloader"
     radarr:
       image: lscr.io/linuxserver/radarr:latest
       network_mode: service:wireguard
@@ -62,6 +80,12 @@ services:
         - radarr-config:/config
         - '{{ media_station_data_dir }}:/media-station'
       restart: unless-stopped
+      labels:
+        - "homepage.group=Media"
+        - "homepage.name=Radarr"
+        - "homepage.icon=radarr.png"
+        - "homepage.href=https://radarr.bfkr.dev"
+        - "homepage.description=Movie library automation"
     sonarr:
       image: lscr.io/linuxserver/sonarr:latest
       network_mode: service:wireguard
@@ -73,6 +97,12 @@ services:
         - sonarr-config:/config
         - '{{ media_station_data_dir }}:/media-station'
       restart: unless-stopped
+      labels:
+        - "homepage.group=Media"
+        - "homepage.name=Sonarr"
+        - "homepage.icon=sonarr.png"
+        - "homepage.href=https://sonarr.bfkr.dev"
+        - "homepage.description=Series library automation"
 
 networks:
     ddome: 
@@ -127,4 +157,3 @@ volumes:
         type: none
         o: bind
         device: '{{ media_station_data_dir }}/media/series'
-

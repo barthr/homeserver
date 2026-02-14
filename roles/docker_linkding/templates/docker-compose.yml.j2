@@ -9,9 +9,14 @@ services:
       - LD_SUPERUSER_PASSWORD={{ password }}
     networks:
       - ddome
+    labels:
+      - "homepage.group=Productivity"
+      - "homepage.name=Linkding"
+      - "homepage.icon=linkding.png"
+      - "homepage.href=https://linkding.bfkr.dev"
+      - "homepage.description=Bookmark manager"
 
 networks:
     ddome: 
         external: true
-
 

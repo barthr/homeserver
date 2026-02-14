@@ -10,9 +10,14 @@ services:
     restart: unless-stopped
     networks:
      - ddome
+    labels:
+     - "homepage.group=Automation"
+     - "homepage.name=Changedetection"
+     - "homepage.icon=changedetection-io.png"
+     - "homepage.href=https://changedetection.bfkr.dev"
+     - "homepage.description=Website change alerts"
 
 networks:
     ddome: 
         external: true
-
 

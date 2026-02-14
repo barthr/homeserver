@@ -57,7 +57,12 @@
         reverse_proxy linkding:9090
     }
     
-    @homeassistant host home.bfkr.dev
+    @homepage host home.bfkr.dev
+    handle @homepage {
+        reverse_proxy homepage:3000
+    }
+
+    @homeassistant host homeassistant.bfkr.dev
     handle @homeassistant {
         reverse_proxy homeassistant:8123
     }
@@ -70,5 +75,20 @@
     @silverbullet host silverbullet.bfkr.dev
     handle @silverbullet {
         reverse_proxy silverbullet:3000
+    }
+    
+    @drive host drive.bfkr.dev 
+    handle @drive {
+        reverse_proxy filestash:8334
+        encode gzip
+    }
+    
+    @office host office.bfkr.dev
+    handle @office {
+        reverse_proxy wopi_server:9980 {
+            header_up Host {host}
+            header_up X-Forwarded-Proto {scheme}
+        }
+        encode gzip
     }
 }

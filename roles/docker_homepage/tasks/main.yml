@@ -1,0 +1,19 @@
+- name: Deploy Homepage
+  ansible.builtin.import_tasks: "{{ playbook_dir }}/roles/shared/tasks/docker_compose_service.yml"
+  vars:
+    service_name: "homepage"
+    service_extra_directories:
+      - "{{ service_config_dir }}/config"
+    service_extra_templates:
+      - src: "{{ role_path }}/templates/docker.yaml.j2"
+        dest: "config/docker.yaml"
+        mode: "0644"
+      - src: "{{ role_path }}/templates/services.yaml.j2"
+        dest: "config/services.yaml"
+        mode: "0644"
+      - src: "{{ role_path }}/templates/bookmarks.yaml.j2"
+        dest: "config/bookmarks.yaml"
+        mode: "0644"
+      - src: "{{ role_path }}/templates/widgets.yaml.j2"
+        dest: "config/widgets.yaml"
+        mode: "0644"
