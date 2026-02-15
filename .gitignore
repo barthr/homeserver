@@ -2,4 +2,4 @@ vault_password_file
 vars.yml
 roles/docker_media-station/files/wireguard-config/*
 !roles/docker_media-station/files/wireguard-config/.keep
-
+/.idea/
