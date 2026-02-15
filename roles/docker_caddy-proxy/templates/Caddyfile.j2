@@ -76,6 +76,11 @@
     handle @silverbullet {
         reverse_proxy silverbullet:3000
     }
+
+    @vikunja host vikunja.bfkr.dev
+    handle @vikunja {
+        reverse_proxy vikunja:3456
+    }
     
     @drive host drive.bfkr.dev 
     handle @drive {

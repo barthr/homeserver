@@ -1,0 +1,25 @@
+services:
+  vikunja:
+    image: vikunja/vikunja:latest
+    restart: unless-stopped
+    environment:
+      - VIKUNJA_SERVICE_ENABLEREGISTRATION=false
+      - VIKUNJA_SERVICE_PUBLICURL=https://vikunja.bfkr.dev
+      - VIKUNJA_DATABASE_TYPE=sqlite
+      - VIKUNJA_DATABASE_PATH=/app/vikunja/files/vikunja.db
+    volumes:
+      - ./files:/app/vikunja/files
+    networks:
+      - ddome
+    labels:
+      - "homepage.group=Productivity"
+      - "homepage.name=Vikunja"
+      - "homepage.icon=vikunja.png"
+      - "homepage.href=https://vikunja.bfkr.dev"
+      - "homepage.description=Task and project management"
+      - "kuma.vikunja.http.name=Vikunja"
+      - "kuma.vikunja.http.url=https://vikunja.bfkr.dev"
+
+networks:
+  ddome:
+    external: true

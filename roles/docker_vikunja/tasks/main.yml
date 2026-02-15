@@ -1,0 +1,6 @@
+- name: Deploy Vikunja
+  ansible.builtin.import_tasks: "{{ playbook_dir }}/roles/shared/tasks/docker_compose_service.yml"
+  vars:
+    service_name: "vikunja"
+    service_extra_directories:
+      - "{{ service_config_dir }}/files"
