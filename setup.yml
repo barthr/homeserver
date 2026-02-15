@@ -12,4 +12,6 @@
    - docker_home-assistant
    - docker_n8n
    - docker_silverbullet
+   - docker_filestash
+   - docker_homepage
    - docker_caddy-proxy
